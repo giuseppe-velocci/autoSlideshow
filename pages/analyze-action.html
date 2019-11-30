@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../src/analyze.js"></script>
+</head>
+<body>
+    <div class="res">
+        <img src="wait.gif" width="400" height="300" />
+    </div>
+    <script>
+        detect(__dirname + '/images2check/img2.jpg').then((data) => {
+            document.querySelector('.res').innerHTML = data.detection[0].class
+            + " --> " + data.width + " x " + data.height;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script>
+	if (typeof jQuery == "undefined"){window.$ = window.jQuery = require('jquery');}
+</script>
+<script> 
+
+$(document).ready(function() {   
+    $("img").animate(
+		//left: -left, top: -up
+		{'left': '-400px', 'top': '-10px'}, 6000
+	);
+	$("div").animate(
+		//width: right-left, height: down-up
+		{'width':'500px', 'height': '280px'}, 6000
+	);
+	$("img").animate(
+		//width: w+(right-left), height: h+(down-up)
+		{'width':'1500px', 'height': '840px' }, 6000
+	);
+	$("div").animate(
+		//width: w, height: h
+		{'width':'1000px', 'height': '560px' }, 6000
+	);
+
+}); 
+</script> 
+</head>
+<body>
+<!-- width:w, height:h -->
+<div style="background:white; overflow:hidden; position:absolute; width:1000px, height:560px">
+	<img src="./images2check/" style="position:relative;" >
+</div>
+
+</body>
+</html>
