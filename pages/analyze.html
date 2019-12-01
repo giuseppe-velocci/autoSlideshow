@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Analyze</title>
+    <link rel="stylesheet" src="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <!--script 
+        src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    -->
 </head>
 <body>
     <h1>Analyze</h1>
-    <a href="#" id="drag">item</a>
-    <script type="text/javascript" charset="utf-8">
-        document.getElementById('drag').ondragstart = (event) => {
-            event.preventDefault()
-            ipcRenderer.send('ondragstart', './images2check')
-        }
-    </script>
-    <a href="./analyze-action.html"><button>Analyze</button></a>
+    
+    <p>Select a folder containing images to be analyzed:</p>
+    <p id="folderShow">&nbsp;</p>
+
+    <form action="./analyze-action.html"  method="get">
+        <input type="button" class="btn " id="select" value="Select Folder" />
+        <input type="submit" class="btn btn-primary" value="Analyze" disabled/>
+    </form>
+
+    <script src="./js/analyze.js"></script>  
 </body>
 </html>

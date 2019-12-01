@@ -1,7 +1,14 @@
 const ccsd = require('@tensorflow-models/coco-ssd');
 const tf = require('@tensorflow/tfjs-core');
-const fs = require('fs');
 const jpeg = require('jpeg-js');
+
+try {
+  const fs = require('fs');
+  const path = require('path');
+} catch (e) {
+  console.error(e);
+}
+
 
 // number of channels of input image
 const NUMBER_OF_CHANNELS = 3;
@@ -35,9 +42,26 @@ const imageToInput = (image, numChannels) => {
     return { t3d: input, width:image.width, height:image.height };
 }
 
+// function that checks extension for images to ensure ONLY jpg will be parsed
+const correctImgExtension = (imagePath, ext) => {
+  let splitPath = path.parse(imagePath);
+  if(ext.length == undefined) {
+    if (splitPath.ext != ext)
+      return false;
+  } else {
+    for (let i = 0; i < ext.length; i++) {
+      if (splitPath.ext != ext[i])
+        return false;
+    }
+  }
+  return true;
+}
+
 // public function
 async function detect (imagePath) {
-    if (imagePath)
+    if (correctImgExtension (imagePath, ['jpg', 'jpeg'])) {
+      return {};
+    }
     console.log(imagePath);
     
     const image = readImage(imagePath);
