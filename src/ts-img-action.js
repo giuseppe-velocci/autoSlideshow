@@ -1,6 +1,7 @@
 const ccsd = require('@tensorflow-models/coco-ssd');
 const tf = require('@tensorflow/tfjs-core');
 const jpeg = require('jpeg-js');
+const path = require('path');
 
 try {
   const fs = require('fs');

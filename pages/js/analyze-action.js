@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const resElement = document.querySelector('.res');
+const progressElement = document.querySelector('#progress');
 const folder = sessionStorage.getItem('folder');
 const allowedExtensions = /(jpg|jpeg)$/;
 
@@ -23,22 +24,32 @@ const fileList = fs.readdirSync(folder);
 fileList.img = fileList.filter((x) => {
     return allowedExtensions.test(x);
 });
+const validImgsNum = fileList.img.length;
 
 // if no valid files were found: stop
 console.log(fileList.img);
-if (fileList.img.length < 1) {
+if (validImgsNum < 1) {
     resElement.innerHTML = 'No valid images found inside the given folder.';
     goBackBtn();
     throw new Error();
 }
 
 // if everything is ok: start processing data
-
-
-const action = (file) => {
-    detect(file).then((data) => {
-        resElement.innerHTML = data.detection[0].class
-        + " --> " + data.width + " x " + data.height;
-        goBackBtn();
-    });
-}
+const numCPUs = require('os').cpus().length;
+(async function (){
+    const result = [];
+    if (validImgsNum > 1) {
+        if (numCPUs <= validImgsNum) {
+            // .. here using multi-processes
+        }
+    // single process handeling
+    } else {
+        progressElement.innerHTML = `analyzing: ${fileList.img[0]}`;
+        const resDetection = await detect(folder + '/'+ fileList.img[0]); 
+        result.push(resDetection);
+    }
+})().then((data) =>{
+    resElement.innerHTML = '';
+    progressElement.innerHTML = 'DONE!';
+    goBackBtn();
+});
