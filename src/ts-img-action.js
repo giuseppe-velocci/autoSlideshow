@@ -2,14 +2,7 @@ const ccsd = require('@tensorflow-models/coco-ssd');
 const tf = require('@tensorflow/tfjs-core');
 const jpeg = require('jpeg-js');
 const path = require('path');
-
-try {
-  const fs = require('fs');
-  const path = require('path');
-} catch (e) {
-  console.error(e);
-}
-
+const fs = require('fs');
 
 // number of channels of input image
 const NUMBER_OF_CHANNELS = 3;

@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 
 const resElement = document.querySelector('.res');
 const progressElement = document.querySelector('#progress');
@@ -34,19 +34,22 @@ if (validImgsNum < 1) {
     throw new Error();
 }
 
+// then setup an array with data to be passed in analysis
+
+
 // if everything is ok: start processing data
 const numCPUs = require('os').cpus().length;
 (async function (){
-    const result = [];
-    if (validImgsNum > 1) {
-        if (numCPUs <= validImgsNum) {
-            // .. here using multi-processes
-        }
-    // single process handeling
-    } else {
+
+    // single process analysis
+    if (validImgsNum == 1 || numCPUs == 1) {
+        const result = [];
         progressElement.innerHTML = `analyzing: ${fileList.img[0]}`;
         const resDetection = await detect(folder + '/'+ fileList.img[0]); 
         result.push(resDetection);
+    // multi-process analysis
+    } else {
+       
     }
 })().then((data) =>{
     resElement.innerHTML = '';
