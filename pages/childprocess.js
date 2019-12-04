@@ -1,5 +1,5 @@
 // process.chdir(__dirname);
-const tflow = require(__dirname + '/ts-img-action');
+const tflow = require('./ts-img-action');
 
 (async function(){
     const imagePath = process.argv[4];

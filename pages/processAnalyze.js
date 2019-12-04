@@ -46,11 +46,25 @@ const callChild = (imgname) => {
     );
 };
 
+// function to check if analyzing process has finished
+const isAnalysisComplete = () => {
+    let activeProcessesCount = 0;
+    for (let i = 0; i < processes.length; i++) {
+        if (processes[i] != null)
+            activeProcessesCount++;
+    }
+    if (activeProcessesCount == 0)
+        return true;
+
+    return false;
+}
+
 
 // 
-const multiCall = (folder, images) => {
+const multiCall = async (folder, images) => {
     const imgdata = setupData(folder, images);
     let nextImg;
+    return new Promise(res => {
     for (let i = 0; i < numCPUs; i++) {
         nextImg = img2process(imgdata);
         
@@ -72,6 +86,9 @@ const multiCall = (folder, images) => {
                 if (! processes[i].process.kill()) {
                     processes[i] = null;
                 }
+                if (isAnalysisComplete()) {
+                    res(true);
+                }
             });
             // message
             processes[i].process.on('message', (data) => {
@@ -86,14 +103,18 @@ const multiCall = (folder, images) => {
                 nextImg = img2process(imgdata);
                 // console.log(nextImg);
                 if (typeof(nextImg) == 'undefined') {
-                processes[i] = null; 
+                    processes[i] = null;
                 } else {
                     nextImg.status = PROCESSING;
                     processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
                 }
+                if (isAnalysisComplete()) {
+                    res(true);
+                }
             });    
         }
     }
+    });
 };
 
 // tests

@@ -1,5 +1,3 @@
-// const fs = require('fs');
-
 const resElement = document.querySelector('.res');
 const progressElement = document.querySelector('#progress');
 const folder = sessionStorage.getItem('folder');
@@ -10,7 +8,6 @@ console.log(folder);
 const goBackBtn = () => {
     resElement.innerHTML += '<p>Back to <a href="../index.html">Home</a></p>';
 }
-
 
 // check if a folder was selected
 if (folder == null) {
@@ -36,21 +33,22 @@ if (validImgsNum < 1) {
 
 // then setup an array with data to be passed in analysis
 
-
 // if everything is ok: start processing data
-const numCPUs = require('os').cpus().length;
 (async function (){
-
     // single process analysis
-    if (validImgsNum == 1 || numCPUs == 1) {
-        const result = [];
-        progressElement.innerHTML = `analyzing: ${fileList.img[0]}`;
-        const resDetection = await detect(folder + '/'+ fileList.img[0]); 
-        result.push(resDetection);
+    if (validImgsNum == 1 || require('os').cpus().length == 1) {
+        for (let i = 0; i < validImgsNum; i++) {
+            progressElement.innerHTML = `analyzing: ${fileList.img[i]}`;
+            const resDetection = await detect(folder + '/'+ fileList.img[i]);
+            // missing results storage and file copy
+            // ..
+        }
+
     // multi-process analysis
     } else {
-       
+       await multiCall(folder, fileList);
     }
+
 })().then((data) =>{
     resElement.innerHTML = '';
     progressElement.innerHTML = 'DONE!';
