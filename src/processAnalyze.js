@@ -1,5 +1,5 @@
 const childProcess = require('child_process');
-const numCPUs = 2;// require('os').cpus().length;
+const numCPUs = require('os').cpus().length;
 const processes = [];
 
 // image obj status
@@ -53,51 +53,51 @@ const multiCall = (folder, images) => {
     let nextImg;
     for (let i = 0; i < numCPUs; i++) {
         nextImg = img2process(imgdata);
-        nextImg.status = PROCESSING;
-
+        
         if (typeof(nextImg) == 'undefined') {
             processes[i] = null;
         } else {
-            processes[i] = { process: callChild(nextImg.url), image: nextImg.url };    
-        }
+            nextImg.status = PROCESSING;
+            processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
 
-        // add event listeners
-        processes[i].process.on('data', (data) => {
-            // ...
-            // console.log(data);
-        });
-        // error
-        processes[i].process.on('error', (code) => {
-            // force kill
-            processes[i].image.status = ERROR;
-            if (! processes[i].process.kill()) {
-                processes[i] = null;
-            }
-        });
-        // message
-        processes[i].process.on('message', (data) => {
-            console.log(processes[i].image);
-            processes[i].image.status = COMPLETE;
-            // store results
-            // ...
-        });
-        // close
-        processes[i].process.on('close', (code) => {
-            // check if there are more images, then restart process
-            nextImg = img2process(imgdata);
-            // console.log(nextImg);
-            if (typeof(nextImg) == 'undefined') {
-               processes[i] = null; 
-            } else {
-                nextImg.status = PROCESSING;
-                processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
-            }
-        });
+            // add event listeners
+            processes[i].process.on('data', (data) => {
+                // ...
+                // console.log(data);
+            });
+            // error
+            processes[i].process.on('error', (code) => {
+                // force kill
+                processes[i].image.status = ERROR;
+                if (! processes[i].process.kill()) {
+                    processes[i] = null;
+                }
+            });
+            // message
+            processes[i].process.on('message', (data) => {
+                console.log(processes[i].image);
+                processes[i].image.status = COMPLETE;
+                // store results
+                // ...
+            });
+            // close
+            processes[i].process.on('close', (code) => {
+                // check if there are more images, then restart process
+                nextImg = img2process(imgdata);
+                // console.log(nextImg);
+                if (typeof(nextImg) == 'undefined') {
+                processes[i] = null; 
+                } else {
+                    nextImg.status = PROCESSING;
+                    processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
+                }
+            });    
+        }
     }
 };
 
 // tests
-/* 
+/*
 multiCall('D:\\giuse\\Documents\\ITS_2018_20\\NodeJs\\testslideshow\\tensorflow-img\\finalNodePrj\\img', 
 ['cars.jpg', 'dogPerson.jpg', 'trump.jpg']);
-*/
+ */
