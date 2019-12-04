@@ -56,7 +56,7 @@ async function detect (imagePath) {
     if (correctImgExtension (imagePath, ['jpg', 'jpeg'])) {
       return {};
     }
-    console.log(imagePath);
+    // console.log(imagePath);
     
     const image = readImage(imagePath);
     const input = imageToInput(image, NUMBER_OF_CHANNELS);
@@ -65,5 +65,10 @@ async function detect (imagePath) {
     const detection = await model.detect(input.t3d);
     const result = {detection: detection, width: input.width, height: input.height};
       console.log('classification results: ', result);
+      console.log(imagePath);
     return result;
+}
+
+module.exports = {
+  detect
 }

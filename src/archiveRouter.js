@@ -7,7 +7,7 @@ let dPath = __dirname + '\\sorted\\'
 
 function destinationFolder(objName){
     objName=objName.replace(/ /,'-') //replace spaces with dashes
-    const path=dPath+objName; //create final destination path
+    const path = dPath+objName; //create final destination path
     if (!fs.existsSync(path)){
         fs.mkdirSync(path);
     }
@@ -27,6 +27,9 @@ function copyImg(filePath, destinationPath){//paths must contain filename
     });
 }
 
-
-
-
+/*
+// test
+const filePath = 'D:\\giuse\\Documents\\ITS_2018_20\\NodeJs\\testslideshow\\tensorflow-img\\finalNodePrj\\src\\ts-img-action.js';
+const dest = destinationFolder('dog men');
+console.log(copyImg(filePath, dest + '\\ts-img-action.js'));
+*/
