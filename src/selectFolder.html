@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			const testFolder =  __dirname+'/categories/';
+			const fs = require('fs');
+			//console.log(document.getElementById("folder").textContent)
+			let list="Select the folder:  <select>";
+			fs.readdir(testFolder, (err, files) => {
+			  files.forEach(file => {
+				list = list + " <option value="+ file +">"+ file + "</option>"
+				console.log(file);
+			  });
+			list = list + "</select>";
+			document.getElementById("folder").innerHTML = list;
+			});
+			
+		</script>
+	</head>
+	<body>
+		<a href="../index.html">home</a>
+		<form action="./animation.html"  method="get">
+			<div id="folder"></div>
+			<input type="submit" class="btn btn-primary" value="Start Animation"/>
+		</form>
+		
+	</body>
+</html>

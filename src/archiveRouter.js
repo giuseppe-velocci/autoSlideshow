@@ -2,8 +2,8 @@ const fs = require('fs');
 
 //archive path - archive is the folder that contain images to be analized
 const arPath = __dirname + '\\archive'
-// origin destination path - sorted is the folder that contain objName folders with images already sorted
-let dPath = __dirname + '\\sorted\\'
+// origin destination path - pages is the folder that contain objName folders with images already sorted
+let dPath = __dirname + '\\categories\\'
 
 function destinationFolder(objName){
     objName=objName.replace(/ /,'-') //replace spaces with dashes
@@ -25,6 +25,10 @@ function copyImg(filePath, destinationPath){//paths must contain filename
         }
         return true
     });
+}
+
+module.exports = { 
+	destinationFolder, copyImg
 }
 
 /*

@@ -92,7 +92,26 @@ const multiCall = async (folder, images) => {
             });
             // message
             processes[i].process.on('message', (data) => {
-                console.log(processes[i].image);
+				let archiveRouter = require ("./archiveRouter.js");
+				let updateJson = require("./updateJson.js")
+
+				const filterValues = () => {
+				  return numbers.filter(number => {
+					  return number % 2 == 0;
+				  });
+				}
+
+				for(j=0; j<data.detection.length; j++)
+				{
+					let folder = archiveRouter.destinationFolder(data.detection[j].class);
+					let name = processes[i].image.split("/");
+					archiveRouter.copyImg(processes[i].image, folder +"/" +name[1]);
+					let result = {width: data.width, height: data.height, detection: data.detection[j]};
+					updateJson.updateJson(name[1], folder, result);
+				}
+				
+
+				
                 processes[i].image.status = COMPLETE;
                 // store results
                 // ...
