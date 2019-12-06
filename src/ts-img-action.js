@@ -63,7 +63,7 @@ async function detect (imagePath) {
   
     const model = await ccsd.load();
     const detection = await model.detect(input.t3d);
-    const result = {detection: detection, width: input.width, height: input.height};
+    const result = {detection: detection, width: input.width, height: input.height, image:imagePath};
       console.log('classification results: ', result);
       console.log(imagePath);
     return result;

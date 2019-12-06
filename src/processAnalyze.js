@@ -1,6 +1,8 @@
-const childProcess = require('child_process');
-const numCPUs = require('os').cpus().length;
-const processes = [];
+const childProcess  = require('child_process');
+const archiveRouter = require ("./archiveRouter.js");
+const updateJson = require("./updateJson.js")
+const numCPUs    = require('os').cpus().length;
+const processes  = [];
 
 // image obj status
 const TO_PROCESS = 0;
@@ -29,17 +31,50 @@ const setupData = (folder, imgList) => {
     return data;
 }
 
+// filter images from array splitting them in equal parts among processes
+// filters only jpeg files!
+const splitInEqualParts = (data, shardNumber) => {
+    data = data.filter(x => /\.(jpg|jpeg)$/.test(x));
+    const len   = data.length;
+    const shard = Math.floor(len / shardNumber);
+    const remainder = len % shardNumber;
+    const splitData = [];
+
+    if (len < shardNumber) {
+        splitData.push([]);
+        for (let i = 0; i < data.length; i++) {
+            splitData[0].push(data[i]);
+        }
+        return splitData;
+        
+    }
+
+    for (let i = 0; i < shardNumber; i++) {
+        splitData.push([]);
+        for (let j= 0; j < shard; j++) {
+            splitData[i].push(data[i * shard +j]);
+        }
+    }
+
+    for (let i = remainder; i >= 1 ; i--) {
+        splitData[i-1].push(data[len - i])
+    }
+
+    return splitData;
+}
+
+
 
 // function to assign image to process
 const img2process = (data) => {
-    return toProcess = data.filter(x => x.status == TO_PROCESS)[0]; // returns undefined when empty
+   return toProcess = data.filter(x => x.status == TO_PROCESS)[0]; // returns undefined when empty
 }
 
 // function to spawn a child
-const callChild = (imgname) => {
+const callChild = (folder, imgnames) => {
     return childProcess.fork(
         __dirname + '/childprocess', // path script 
-        ['-r', 'esm', imgname],    // array param to be passed to cli
+        ['-r', 'esm', folder, imgnames],    // array param to be passed to cli
         {                         // options
             
         }
@@ -53,6 +88,7 @@ const isAnalysisComplete = () => {
         if (processes[i] != null)
             activeProcessesCount++;
     }
+    console.log(processes);
     if (activeProcessesCount == 0)
         return true;
 
@@ -61,83 +97,53 @@ const isAnalysisComplete = () => {
 
 
 // 
-const multiCall = async (folder, images) => {
-    const imgdata = setupData(folder, images);
-    let nextImg;
+const multiCall = async (folder, images, callbackSuccess) => {
+    const allImgLen = images.length;
+    const splitData = splitInEqualParts (images, numCPUs);
+    const imgDataStatus = setupData(folder, images);
+
     return new Promise(res => {
-    for (let i = 0; i < numCPUs; i++) {
-        nextImg = img2process(imgdata);
-        
-        if (typeof(nextImg) == 'undefined') {
+    for (let i = 0; i < splitData.length; i++) {
+        processes[i] = callChild(folder, JSON.stringify(splitData[i])); // { process: callChild(folder, JSON.stringify(splitData[i])), image: nextImg.url };
+
+        // message
+        processes[i].on('message', (data) => {
+            callbackSuccess();
+            // store results
+            for(j=0; j<data.detection.length; j++)
+            {
+                console.log(data);
+               /* 
+                let folder = archiveRouter.destinationFolder(data.detection[j].class);
+                let name = data.image.split("/");
+                archiveRouter.copyImg(data.image, folder +"/" +name[1]);
+                let result = {width: data.width, height: data.height, detection: data.detection[j]};
+                updateJson.updateJson(name[1], folder, result);
+              */  
+            }
+            let imgCompleted = imgDataStatus.filter(x=> x.url == data.image)[0].status = COMPLETE;
+            progress.innerHtml = 100 * Math.round(imgCompleted.length / allImgLen) + '%';
+            if (isAnalysisComplete()) {
+                res(true);
+            }
+        });
+        // close
+        processes[i].on('close', (code) => {
             processes[i] = null;
-        } else {
-            nextImg.status = PROCESSING;
-            processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
-
-            // add event listeners
-            processes[i].process.on('data', (data) => {
-                // ...
-                // console.log(data);
-            });
-            // error
-            processes[i].process.on('error', (code) => {
-                // force kill
-                processes[i].image.status = ERROR;
-                if (! processes[i].process.kill()) {
-                    processes[i] = null;
-                }
-                if (isAnalysisComplete()) {
-                    res(true);
-                }
-            });
-            // message
-            processes[i].process.on('message', (data) => {
-				let archiveRouter = require ("./archiveRouter.js");
-				let updateJson = require("./updateJson.js")
-
-				const filterValues = () => {
-				  return numbers.filter(number => {
-					  return number % 2 == 0;
-				  });
-				}
-
-				for(j=0; j<data.detection.length; j++)
-				{
-					let folder = archiveRouter.destinationFolder(data.detection[j].class);
-					let name = processes[i].image.split("/");
-					archiveRouter.copyImg(processes[i].image, folder +"/" +name[1]);
-					let result = {width: data.width, height: data.height, detection: data.detection[j]};
-					updateJson.updateJson(name[1], folder, result);
-				}
-				
-
-				
-                processes[i].image.status = COMPLETE;
-                // store results
-                // ...
-            });
-            // close
-            processes[i].process.on('close', (code) => {
-                // check if there are more images, then restart process
-                nextImg = img2process(imgdata);
-                // console.log(nextImg);
-                if (typeof(nextImg) == 'undefined') {
-                    processes[i] = null;
-                } else {
-                    nextImg.status = PROCESSING;
-                    processes[i] = { process: callChild(nextImg.url), image: nextImg.url };
-                }
-                if (isAnalysisComplete()) {
-                    res(true);
-                }
-            });    
-        }
+            if (isAnalysisComplete()) {
+                res(true);
+            }
+        }); 
+        // error
+        processes[i].on('error', (code) => {
+            // force kill
+            if (! processes[i].kill()) {
+                processes[i] = null;
+            }
+            if (isAnalysisComplete()) {
+                res(true);
+            }
+        });   
     }
     });
 };
-
-// tests
-/*
-multiCall('D:\\giuse\\Documents\\ITS_2018_20\\NodeJs\\testslideshow\\tensorflow-img\\finalNodePrj\\img', 
-['cars.jpg', 'dogPerson.jpg', 'trump.jpg']);
- */

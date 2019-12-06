@@ -1,5 +1,5 @@
 const resElement = document.querySelector('.res');
-const progressElement = document.querySelector('#progress');
+const progressElement = document.querySelector('#message');
 const folder = sessionStorage.getItem('folder');
 const allowedExtensions = /(jpg|jpeg)$/;
 
@@ -35,21 +35,17 @@ if (validImgsNum < 1) {
 
 // if everything is ok: start processing data
 (async function (){
-    // single process analysis
-    if (validImgsNum == 1 || require('os').cpus().length == 1) {
-        for (let i = 0; i < validImgsNum; i++) {
-            progressElement.innerHTML = `analyzing: ${fileList.img[i]}`;
-            const resDetection = await detect(folder + '/'+ fileList.img[i]);
-            // missing results storage and file copy
-            // ..
-        }
+        function progress (v) {
+            let completed = 0;
+            const percent = document.querySelector("#progress");
+            return () => {
+                console.log(completed);
+                percent.innerHTML = Math.round(100 * (++completed / v)) + '%';
+            };
+        };
 
-    // multi-process analysis
-    } else {
-       await multiCall(folder, fileList);
-    }
-
-})().then((data) =>{
+        await multiCall(folder, fileList, progress(validImgsNum));
+    })().then((data) =>{
     resElement.innerHTML = '';
     progressElement.innerHTML = 'DONE!';
     goBackBtn();
