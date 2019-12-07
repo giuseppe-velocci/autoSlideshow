@@ -88,7 +88,7 @@ const isAnalysisComplete = () => {
         if (processes[i] != null)
             activeProcessesCount++;
     }
-    console.log(processes);
+    //console.log(processes);
     if (activeProcessesCount == 0)
         return true;
 
@@ -112,14 +112,14 @@ const multiCall = async (folder, images, callbackSuccess) => {
             // store results
             for(j=0; j<data.detection.length; j++)
             {
-                console.log(data);
-               /* 
+                //console.log(data);
+               
                 let folder = archiveRouter.destinationFolder(data.detection[j].class);
                 let name = data.image.split("/");
                 archiveRouter.copyImg(data.image, folder +"/" +name[1]);
                 let result = {width: data.width, height: data.height, detection: data.detection[j]};
                 updateJson.updateJson(name[1], folder, result);
-              */  
+                
             }
             let imgCompleted = imgDataStatus.filter(x=> x.url == data.image)[0].status = COMPLETE;
             progress.innerHtml = 100 * Math.round(imgCompleted.length / allImgLen) + '%';

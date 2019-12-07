@@ -5,7 +5,7 @@
 			const testFolder =  __dirname+'/categories/';
 			const fs = require('fs');
 			//console.log(document.getElementById("folder").textContent)
-			let list="Select the folder:  <select>";
+			let list="Select the folder:  <select id='scelta'>";
 			fs.readdir(testFolder, (err, files) => {
 			  files.forEach(file => {
 				list = list + " <option value="+ file +">"+ file + "</option>"
@@ -15,13 +15,19 @@
 			document.getElementById("folder").innerHTML = list;
 			});
 			
+			function save()
+			{
+				let sceltaIndex = document.getElementById("scelta");
+				sessionStorage.setItem("animationFolder", sceltaIndex[sceltaIndex.selectedIndex].value);
+				document.getElementById("animazione").submit();
+			}
 		</script>
 	</head>
 	<body>
 		<a href="../index.html">home</a>
-		<form action="./animation.html"  method="get">
+		<form id="animazione" action="./animation.html"  method="get">
 			<div id="folder"></div>
-			<input type="submit" class="btn btn-primary" value="Start Animation"/>
+			<input type="button" class="btn btn-primary" onclick="save()" value="Start Animation"/>
 		</form>
 		
 	</body>

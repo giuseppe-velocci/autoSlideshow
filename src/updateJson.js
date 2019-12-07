@@ -1,52 +1,44 @@
 function updateJson(filename, destinationFolder, detectionFrame)
 {
+	
 	const fs = require('fs');
 	const file = destinationFolder+"/detect.json";
 	if (!fs.existsSync(file)) {
 		const base = {
 			dati:[]
 		}
-		fs.writeFile(file, JSON.stringify(base), (err) => {
-			if (err) throw err
-		})
+		fs.writeFileSync(file, JSON.stringify(base))
 	}
 	
 	const jsonData = {
-		file:filename,
+		file: filename,
 		data: [detectionFrame.detection],
 		width: detectionFrame.width,
 		height: detectionFrame.height
 	};
 		
-	fs.readFile(file, 'utf-8', function(err, data) {
-		if (err) throw err
-		let arrayOfObjects = JSON.parse(data)
-		
-		let i=0;
-		if (arrayOfObjects.dati.length!=0)
-		{
-			while(arrayOfObjects.dati[i].file!= filename && i!=arrayOfObjects.dati.length)
-			{
-				console.log(arrayOfObjects.dati[i].file);
-				i++;
+	let d = fs.readFileSync(file, 'utf-8') 
+	let arrayOfObjects = JSON.parse(d);
+	
+	let test;
+	if (arrayOfObjects.dati.length!=0)
+	{
+		test = arrayOfObjects.dati.filter(
+			function(x){ 
+				return x.file == filename; 
 			}
-		
-		}
-		
-		if (i==arrayOfObjects.dati.length)
-		{
-			arrayOfObjects.dati.push(jsonData)
-		}
-		else
-		{
-			arrayOfObjects.dati[i].data.push(detectionFrame.detection);
-		}
-		fs.writeFile(file, JSON.stringify(arrayOfObjects), 'utf-8', (err) =>  {
-			if (err) throw err
-			console.log('Done!')
-			console.log(arrayOfObjects);
-		})
-	})
+		)
+	}
+	
+	if (typeof(test)=='undefined' || test.length==0)
+	{
+		arrayOfObjects.dati.push(jsonData)
+	}
+	else
+	{
+		test[0].data.push(detectionFrame.detection);
+	}
+	fs.writeFileSync(file, JSON.stringify(arrayOfObjects), 'utf-8');
 }
 
 module.exports = { 

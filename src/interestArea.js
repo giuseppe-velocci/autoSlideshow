@@ -23,3 +23,8 @@ function interestArea(a, w, h)
 //l'output è un oggetto con i dati necessari all'animazione	
 	return dimension;
 }
+
+
+module.exports = { 
+	interestArea
+}

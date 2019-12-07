@@ -17,7 +17,6 @@ function destinationFolder(objName){
 function copyImg(filePath, destinationPath){//paths must contain filename
     fs.copyFile(filePath, destinationPath, (err) => {
         if (fs.existsSync(destinationPath)){
-            console.log('File already exists in this folder!')
             return false
         } else if (err) {
             console.log(err)
