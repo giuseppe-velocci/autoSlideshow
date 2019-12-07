@@ -41,9 +41,9 @@ const splitInEqualParts = (data, shardNumber) => {
     const splitData = [];
 
     if (len < shardNumber) {
-        splitData.push([]);
         for (let i = 0; i < data.length; i++) {
-            splitData[0].push(data[i]);
+            splitData.push([]);
+            splitData[i].push(data[i]);
         }
         return splitData;
         

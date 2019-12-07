@@ -1,13 +1,24 @@
-const resElement = document.querySelector('.res');
-const progressElement = document.querySelector('#message');
-const folder = sessionStorage.getItem('folder');
+const fs = require('fs');
 const allowedExtensions = /(jpg|jpeg)$/;
 
-console.log(folder);
+const folder = sessionStorage.getItem('folder');
+const resElement = document.querySelector('.res');
+const progressElement = document.querySelector('#message');
 
 const goBackBtn = () => {
     resElement.innerHTML += '<p>Back to <a href="../index.html">Home</a></p>';
 }
+
+// check internet connection
+if (! window.navigator.onLine) {
+    resElement.innerHTML = '<h3 class="err">No Internet connection.' 
+       + 'Please check your connection and try again.</h3>';
+    goBackBtn ();
+    throw new Error("No internet connection");
+}
+
+
+console.log(folder);
 
 // check if a folder was selected
 if (folder == null) {
