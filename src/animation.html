@@ -5,87 +5,12 @@
 <script>
 	if (typeof jQuery == "undefined"){window.$ = window.jQuery = require('jquery');}
 </script>
-<script> 
-
-$(document).ready(function() {   
-	
-	let interestArea = require ("./interestArea.js");
-	
-	let folder = "./categories/"+ sessionStorage.getItem("animationFolder");
-	
-	$.getJSON(folder + "/detect.json", function(r){
-		
-		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" + r.dati[0].width + "; height:" + r.dati[0].height +"'>";
-			img = img + "<img id='foto' src=" + folder + "/" + r.dati[0].file + " style='position:relative;' ></div>"
-			
-			console.log(img);
-			document.getElementById("animationDiv").innerHTML = img;
-			
-			let p = interestArea.interestArea(r.dati[0].data, r.dati[0].width, r.dati[0].height);
-		
-			$("#foto").animate(
-				//left: -left, top: -up
-				{'left': -p.left, 'top': -p.up}, 3000
-			);
-			$("#divfoto").animate(
-				//width: right-left, height: down-up
-				{'width':p.right-p.left, 'height': p.down-p.up}, 3000
-			);
-			$("foto").animate(
-				//width: w+(right-left), height: h+(down-up)
-				{'width':r.dati[0].width+(p.right-p.left), 'height': r.dati[0].height+(p.down-p.up) }, 3000
-			);
-			$("#divfoto").animate(
-				//width: w, height: h
-				{'width':r.dati[0].width, 'height': r.dati[0].height }, 3000
-			);
-			
-		let i=1
-		let animation = setInterval(() => {
-			
-			let img = "<div id='divfoto' style='background:red; overflow:hidden; position:absolute; width:" + r.dati[i].width + "; height:" + r.dati[i].height +"'>";
-			img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
-			
-			
-			document.getElementById("animationDiv").innerHTML = img;
-			
-			let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
-			console.log(p);
-			$("#foto").animate(
-				//left: -left, top: -up
-				{'left': -p.left, 'top': -p.up}, 3000
-			);
-			$("foto").animate(
-				//width: w+(right-left), height: h+(down-up)
-				{'width':r.dati[i].width+(p.left-p.right), 'height': r.dati[i].height+(p.up-p.down) }, 3000
-			);
-			
-			$("#divfoto").animate(
-				//width: right-left, height: down-up
-				{'width':p.left-p.right, 'height': p.up-p.down}, 3000
-			);
-			
-			$("#divfoto").animate(
-				//width: w, height: h
-				{'width':r.dati[i].width, 'height': r.dati[i].height }, 3000
-			);
-			
-			i++;
-			
-			if (i == r.dati.length) clearInterval(animation);
-		},10000);
-		
-    });
-
-    
-
-}); 
-</script> 
+<script src="animation.js"> </script> 
 </head>
 <body>
 <a href="../index.html">home</a>
 
 <!-- width:w, height:h -->
-<div id="animationDiv" style="background:red;" ></div>
+<div id="animationDiv" ></div>
 </body>
 </html>
