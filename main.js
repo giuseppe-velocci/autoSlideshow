@@ -2,6 +2,12 @@
 const { app, BrowserWindow } = require('electron')
 const { dialog } = require('electron')
 
+const fs = require('fs')
+const categoriesPath = __dirname + '/src/categories';
+if (! fs.existsSync(categoriesPath)) {
+  fs.mkdirSync(categoriesPath);
+}
+
 function createWindow () {
   // Crea la finestra del browser
   let win = new BrowserWindow({

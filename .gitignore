@@ -1,6 +1,7 @@
 # work folders
 img/
 electron/
+src/categories/
 
 # Logs
 logs
