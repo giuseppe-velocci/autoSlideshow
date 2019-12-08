@@ -5,12 +5,13 @@ $(document).ready(function() {
 	let folder = "./categories/"+ sessionStorage.getItem("animationFolder");
 	
 	$.getJSON(folder + "/detect.json", function(r){
-		presentation(0, r);	
-		let i=1
+		
+		let i=0;
+		presentation(i, r);	
 		let animation = setInterval(() => {
-			presentation(i, r)
 			i++;
 			if (i == r.dati.length) clearInterval(animation);
+			else presentation(i, r)	
 		},10000);
     });
 	
@@ -34,11 +35,11 @@ $(document).ready(function() {
 		);
 		$("#foto").animate(
 			//width: w+(right-left), height: h+(down-up)
-			{'width':`${(r.dati[i].width+(p.right+p.left))}px`, 'height': `${(r.dati[i].height+(p.down+p.up))}px` }, 3000
+			{'width':`${(r.dati[i].width*2)}px`, 'height': `${(r.dati[i].height*2)}px`, 'left': `-${p.left*2}px`, 'top': `-${p.up*2}px`}, 3000
 		);
 		$("#divfoto").animate(
 			//width: w, height: h
-			{'width':`${r.dati[i].width}px`, 'height': `${r.dati[i].height}px` }, 3000
+			{'width':`${(r.dati[i].width-p.left-p.right)*2}px`, 'height': `${(r.dati[i].height-p.up-p.down)*2}px` }, 3000
 		);
 	}
 }); 
