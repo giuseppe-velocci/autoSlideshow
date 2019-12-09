@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Analyze</title>
-    <link rel="stylesheet" src="node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <!--script 
-        src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    -->
+    <link rel="stylesheet" href="styles/styles.css">
+
+
 </head>
 <body>
-	<a href="../index.html">home</a>
-    <h1>Analyze</h1>
+    <button class="btn home-analyze-btn" onclick="window.location.href = '../index.html';"><</button>
+    <div class="container-fluid fullheight text-center">
+        <h1>Analyze</h1>
+        <p>Select a folder containing images to be analyzed:</p>
+        <img src = "images/folder.gif" class = "img-fluid" alt = "">
+        <p id="msg">&nbsp;</p>
+        <p id="folderShow">&nbsp;</p>
+        <div class="container">
+            <form action="./analyze-action.html"  method="get">
+                <input type="button" class="btn" id="select" value="Select Folder" />
+                <input type="submit" class="btn" value="Start" disabled/>
+                
+            </form>
     
-    <p>Select a folder containing images to be analyzed:</p>
-    <p id="msg">&nbsp;</p>
-    <p id="folderShow">&nbsp;</p>
-    <form action="./analyze-action.html"  method="get">
-        <input type="button" class="btn " id="select" value="Select Folder" />
-        <input type="submit" class="btn btn-primary" value="Analyze" disabled/>
-    </form>
+        </div>
+        
+    </div>
 
     <script src="./analyze.js"></script>  
 </body>

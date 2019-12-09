@@ -26,6 +26,27 @@ function copyImg(filePath, destinationPath){//paths must contain filename
     });
 }
 
+/*
+const fse = require('fs-extra')
+
+function deleteCategoriesSync(){
+    
+    const directory = __dirname+'\\src\\categories\\';
+
+    const files = fs.readdirSync(directory)
+    console.log(files)
+    files.forEach(file => {
+        if (file is file) //fs.stats
+        fs.unlinkSync(directory+file) //remove files
+        if (file is directory) //fs.stats
+        fse.removeSync(directory+file) //remove directory
+    });
+}
+
+deleteCategoriesSync();
+*/
+
+
 module.exports = { 
 	destinationFolder, copyImg
 }

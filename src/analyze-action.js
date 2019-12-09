@@ -6,7 +6,11 @@ const resElement = document.querySelector('.res');
 const progressElement = document.querySelector('#message');
 
 const goBackBtn = () => {
-    resElement.innerHTML += '<p>Back to <a href="../index.html">Home</a></p>';
+    resElement.innerHTML += `
+<style> h1 {font-family: Helvetica; text-align:center; font-weight: normal;} </style>
+<style> .btn {font-family: Helvetica; text-align:center; border-radius: 3px; border: grey solid 1px; color: grey; background: black; padding:6px} </style>
+<h1>You can return to Home</p>
+<button type="button" class="btn" onclick="window.location.href = '../index.html';">Home</button>`;
 }
 
 // check internet connection
@@ -58,6 +62,6 @@ if (validImgsNum < 1) {
         await multiCall(folder, fileList, progress(validImgsNum));
     })().then((data) =>{
     resElement.innerHTML = '';
-    progressElement.innerHTML = 'DONE!';
+    progressElement.innerHTML = `<style> h1 {font-family: Helvetica; text-align:center; font-weight: normal;} </style><h1>Operation complete.</p>`;
     goBackBtn();
 });

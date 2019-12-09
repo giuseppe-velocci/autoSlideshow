@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <head>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script>
 	if (typeof jQuery == "undefined"){window.$ = window.jQuery = require('jquery');}
 </script>
 <script src="animation.js"> </script> 
+<link rel="stylesheet" href="src/styles/styles.css">
 </head>
+
 <body>
-<a href="../index.html">home</a>
+<div class="contaier text-center">
+	<button class="btn" onclick="window.location.href = '../index.html';">home</button>
+</div>
 
 <!-- width:w, height:h -->
-<div id="animationDiv" ></div>
+<div class="contaier text-center" id="animationDiv" ></div>
 </body>
 </html>
