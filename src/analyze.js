@@ -8,8 +8,8 @@ sessionStorage.setItem('folder', '');
 
 // check internet connection
 if (! window.navigator.onLine) {
-    document.querySelector('#msg').innerHTML = '<h3 class="err">No Internet connection.' 
-       + 'Please check your connection since it is needed to fulfill analysis tasks.</h3>';
+    document.querySelector('#msg').innerHTML = '<h3 class="err">No Internet connection. ' 
+       + 'Please check your connection since it is needed to fulfill analysis tasks</h3>';
 }
 
 document.querySelector('#select').addEventListener('click', (event) => {

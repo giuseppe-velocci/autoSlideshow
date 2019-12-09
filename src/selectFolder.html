@@ -10,11 +10,14 @@
 	</head>
 	
 	<body>
+		<button class=" btn home-analyze-btn" onclick="window.location.href = '../index.html';"><</button>
 		<div class="contaier text-center">
-			<button class="btn" onclick="window.location.href = '../index.html';">home</button>
-			<form id="animazione" action="./animation.html"  method="get">
-				<div id="folder"></div>
+			<h1>Select the category images and start animation.</h1>
+			
+			<form class="" id="animazione" action="./animation.html"  method="get">
 				
+				<img src = "images/select-categories.gif" class = "img-fluid" alt = "">
+				<div class="btn" id="folder"></div>
 				<input type="button" class="btn btn-light" onclick="save()" value="Start Animation"/>
 			</form>
 		</div>

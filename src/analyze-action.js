@@ -7,8 +7,8 @@ const progressElement = document.querySelector('#message');
 
 const goBackBtn = () => {
     resElement.innerHTML += `
-<style> h1 {font-family: Helvetica; text-align:center; font-weight: normal;} </style>
-<style> .btn {font-family: Helvetica; text-align:center; border-radius: 3px; border: grey solid 1px; color: grey; background: black; padding:6px} </style>
+<style> h1 {margin-top: 100px; font-family: Helvetica; text-align:center; font-weight: normal;} </style>
+<style> .btn { margin-top: 50px; font-family: Helvetica; text-align:center; border-radius: 3px; border: grey solid 1px; color: grey; background: black; padding:6px} </style>
 <h1>You can return to Home</p>
 <button type="button" class="btn" onclick="window.location.href = '../index.html';">Home</button>`;
 }
