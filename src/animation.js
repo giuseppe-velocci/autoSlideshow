@@ -1,4 +1,3 @@
-
 $(document).ready(function() {   
 	
 	let interestArea = require ("./interestArea.js");
@@ -17,18 +16,9 @@ $(document).ready(function() {
 	
 	function presentation(i, r)
 	{
-		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:"+r.dati[i].width+" px; height: "+r.dati[i].height+" px'>"
-		img+="<img class='img-fluid' id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;'></div>";
+		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" + r.dati[i].width + "px; height:" + r.dati[i].height +"px'>";
+		img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
 
-/*
-
-		let img = `	<div class="container-fluid fullheight text-center" id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" ${r.dati[i].width} px; height: ${r.dati[i].height} px'>
-						<img class="img-fluid" id='foto' src="${folder}/${r.dati[i].file}" style='position:relative;'>
-					</div>`;
-
-*/
-
-		
 		$("#animationDiv").html(img);
 		
 		let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
@@ -39,7 +29,9 @@ $(document).ready(function() {
 		);
 		$("#divfoto").animate(
 			//width: right-left, height: down-up
-			{'width':`${(r.dati[i].width-p.left-p.right)}px`, 'height': `${(r.dati[i].height-p.up-p.down)}px`}, 3000
+			{'width':`${(r.dati[i].width-p.left-p.right)}px`, 'height': `${(r.dati[i].height-p.up-p.down)}px`
+			, 'left': `${(window.innerWidth - (r.dati[i].width-p.left-p.right))/2}px`
+		}, 3000
 		);
 		$("#foto").animate(
 			//width: w+(right-left), height: h+(down-up)
@@ -47,7 +39,9 @@ $(document).ready(function() {
 		);
 		$("#divfoto").animate(
 			//width: w, height: h
-			{'width':`${(r.dati[i].width-p.left-p.right)*2}px`, 'height': `${(r.dati[i].height-p.up-p.down)*2}px` }, 3000
+			{'width':`${(r.dati[i].width-p.left-p.right)*2}px`, 'height': `${(r.dati[i].height-p.up-p.down)*2}px`
+			, 'left': `${(window.innerWidth /2 -(r.dati[i].width-p.left-p.right))}px`
+			}, 3000
 		);
 	}
 }); 
