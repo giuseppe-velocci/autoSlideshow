@@ -26,25 +26,36 @@ function copyImg(filePath, destinationPath){//paths must contain filename
     });
 }
 
-/*
-const fse = require('fs-extra')
-
 function deleteCategoriesSync(){
-    
-    const directory = __dirname+'\\src\\categories\\';
-
+    const directory = `${__dirname}\\categories\\`;
     const files = fs.readdirSync(directory)
     console.log(files)
-    files.forEach(file => {
-        if (file is file) //fs.stats
-        fs.unlinkSync(directory+file) //remove files
-        if (file is directory) //fs.stats
-        fse.removeSync(directory+file) //remove directory
-    });
+    console.log(files.length)
+    try{
+        files.forEach(file => {
+            let path = directory+file
+            console.log(path)
+            if(!fs.lstatSync(path).isDirectory()){
+                fs.unlinkSync(path)
+            }else{
+                const curFiles = fs.readdirSync(path)
+                curFiles.length===0 ? fs.rmdirSync(path) : curFiles.forEach(curFile => {fs.unlinkSync(path+"\\"+curFile)})
+            }
+        });
+        throw "Succeeful, all files has been deleted"
+    }catch (err) {console.log(err)}
+    
 }
-
+/*
+When you use it, you must call it twice, like this:
 deleteCategoriesSync();
+deleteCategoriesSync();
+In the first call the function deleteCategoriesSync() realize 2 gol:
+1. if in categories/ there are folders with images, the function deletes those images
+2. delete empty folders in categories/
+In second gol the function delete the empty folders that remain in categories/
 */
+
 
 
 module.exports = { 

@@ -3,6 +3,7 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="./styles/styles.css">
 
 <head>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -10,15 +11,15 @@
 	if (typeof jQuery == "undefined"){window.$ = window.jQuery = require('jquery');}
 </script>
 <script src="animation.js"> </script> 
-<link rel="stylesheet" href="src/styles/styles.css">
 </head>
 
 <body>
 <div class="contaier text-center">
+	<h1>Animation</h1>
 	<button class="btn" onclick="window.location.href = '../index.html';">home</button>
 </div>
 
 <!-- width:w, height:h -->
-<div class="contaier text-center" id="animationDiv" ></div>
+<div class="container-fluid fullheight text-center" id="animationDiv" ></div>
 </body>
 </html>

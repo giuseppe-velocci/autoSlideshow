@@ -17,9 +17,17 @@ $(document).ready(function() {
 	
 	function presentation(i, r)
 	{
-		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" + r.dati[i].width + "px; height:" + r.dati[i].height +"px'>";
-		img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
-		
+		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:"+r.dati[i].width+" px; height: "+r.dati[i].height+" px'>"
+		img+="<img class='img-fluid' id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;'></div>";
+
+/*
+
+		let img = `	<div class="container-fluid fullheight text-center" id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" ${r.dati[i].width} px; height: ${r.dati[i].height} px'>
+						<img class="img-fluid" id='foto' src="${folder}/${r.dati[i].file}" style='position:relative;'>
+					</div>`;
+
+*/
+
 		
 		$("#animationDiv").html(img);
 		

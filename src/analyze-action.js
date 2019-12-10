@@ -7,16 +7,17 @@ const progressElement = document.querySelector('#message');
 
 const goBackBtn = () => {
     resElement.innerHTML += `
-<style> h1 {margin-top: 100px; font-family: Helvetica; text-align:center; font-weight: normal;} </style>
-<style> .btn { margin-top: 50px; font-family: Helvetica; text-align:center; border-radius: 3px; border: grey solid 1px; color: grey; background: black; padding:6px} </style>
-<h1>You can return to Home</p>
-<button type="button" class="btn" onclick="window.location.href = '../index.html';">Home</button>`;
+    <style> h1, h3 {margin-top: 100px; font-family: Helvetica; text-align:center; font-weight: normal;} </style>
+    <style> .btn { margin-top: 50px; font-family: Helvetica; text-align:center; border-radius: 3px; border: grey solid 1px; color: grey; background: black; padding:6px} </style>
+    <h1>You can return to Home</p>
+    <button type="button" class="btn" onclick="window.location.href = '../index.html';">Home</button>
+    <button type="button" class="btn" onclick="window.location.href = './selectFolder.html';">Go to Animation</button>`;
 }
 
 // check internet connection
 if (! window.navigator.onLine) {
     resElement.innerHTML = '<h3 class="err">No Internet connection.' 
-       + 'Please check your connection and try again.</h3>';
+       + ' Please check your connection and try again.</h3>';
     goBackBtn ();
     throw new Error("No internet connection");
 }
@@ -62,6 +63,6 @@ if (validImgsNum < 1) {
         await multiCall(folder, fileList, progress(validImgsNum));
     })().then((data) =>{
     resElement.innerHTML = '';
-    progressElement.innerHTML = `<style> h1 {font-family: Helvetica; text-align:center; font-weight: normal;} </style><h1>Operation complete.</p>`;
+    progressElement.innerHTML = `<style> h3 { margin-top: 50px; font-family: Helvetica; text-align:center; font-weight: normal;} </style><h3>Operation completed</p>`;
     goBackBtn();
 });
