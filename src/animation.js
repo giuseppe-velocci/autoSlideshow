@@ -2,27 +2,34 @@ $(document).ready(function() {
 	
 	let interestArea = require ("./interestArea.js");
 	let folder = "./categories/"+ sessionStorage.getItem("animationFolder");
+	let end = "<div id='end' style='display: none; font-size: xx-large; color: #808080;'>THE END </div>";
 	
 	$.getJSON(folder + "/detect.json", function(r){
-		
+
 		let i=0;
 		presentation(i, r);	
 		let animation = setInterval(() => {
 			i++;
-			if (i == r.dati.length) clearInterval(animation);
-			else presentation(i, r)	
-		},10000);
+			if (i == r.dati.length) {
+				clearInterval(animation);
+				$("#foto").hide();
+				$("#end").fadeIn(10000);
+			}
+			else {
+				presentation(i, r);
+			}
+		},9500);
     });
 	
 	function presentation(i, r)
 	{
-		let img = "<div id='divfoto' style='background:white; overflow:hidden; position:absolute; width:" + r.dati[i].width + "px; height:" + r.dati[i].height +"px'>";
+		let img = "<div id='divfoto' style='background:black; overflow:hidden; position:absolute; width:" + r.dati[i].width + "px; height:" + r.dati[i].height +"px'>";
 		img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
+		img = img + end;
 
 		$("#animationDiv").html(img);
 		
 		let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
-		console.log(p);
 		$("#foto").animate(
 			//left: -left, top: -up
 			{'left': `-${p.left}px`, 'top': `-${p.up}px`}, 3000

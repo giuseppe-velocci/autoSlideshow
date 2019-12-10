@@ -1,6 +1,6 @@
 const testFolder =  __dirname+'/categories/';
 const fs = require('fs');
-let list= `Select category <select id='scelta'>`;
+let list= `Select category <select style='background-color: black; color: #808080;' id='scelta'>`;
 fs.readdir(testFolder, (err, files) => {
   files.forEach(file => {
 	  if(fs.lstatSync(testFolder + file).isDirectory())
