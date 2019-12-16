@@ -8,8 +8,8 @@ body {
   background: transparent;
 }
 
-.btn.hover{
-
+.btn:hover{
+  color:#ddd;
 }
 
 .home-analyze-btn{
