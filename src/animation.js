@@ -14,6 +14,9 @@ $(document).ready(function() {
 				clearInterval(animation);
 				$("#foto").hide();
 				$("#end").fadeIn(10000);
+				setTimeout(()=>{
+					$("#end").hide();
+				}, 10000)
 			}
 			else {
 				presentation(i, r);
