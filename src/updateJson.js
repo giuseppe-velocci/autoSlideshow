@@ -14,7 +14,8 @@ function updateJson(filename, destinationFolder, detectionFrame)
 		file: filename,
 		data: [detectionFrame.detection],
 		width: detectionFrame.width,
-		height: detectionFrame.height
+		height: detectionFrame.height,
+		mainColor: detectionFrame.mainColor
 	};
 		
 	let d = fs.readFileSync(file, 'utf-8') 

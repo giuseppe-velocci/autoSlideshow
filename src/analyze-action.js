@@ -55,8 +55,7 @@ if (validImgsNum < 1) {
             let completed = 0;
             const percent = document.querySelector("#progress");
             return () => {
-                //console.log(completed);
-                percent.innerHTML = Math.round(100 * (++completed / v)) + '%';
+                percent.innerHTML = Math.round(100 * (completed++ / v)) + '%';
             };
         };
 

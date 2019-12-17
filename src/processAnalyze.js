@@ -117,7 +117,7 @@ const multiCall = async (folder, images, callbackSuccess) => {
                 let folder = archiveRouter.destinationFolder(data.detection[j].class);
                 let name = data.image.split("/");
                 archiveRouter.copyImg(data.image, folder +"/" +name[1]);
-                let result = {width: data.width, height: data.height, detection: data.detection[j]};
+                let result = {width: data.width, height: data.height, detection: data.detection[j], mainColor:data.mainColor};
                 updateJson.updateJson(name[1], folder, result);
                 
             }
