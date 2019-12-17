@@ -3,7 +3,7 @@ $(document).ready(function() {
 	let interestArea = require ("./interestArea.js");
 	let folder = "./categories/"+ sessionStorage.getItem("animationFolder");
 	let end = "<div id='end' style='display: none; font-size: xx-large; color: #808080;'>THE END </div>";
-	
+
 	$.getJSON(folder + "/detect.json", function(r){
 
 		let i=0;
@@ -13,6 +13,7 @@ $(document).ready(function() {
 			if (i == r.dati.length) {
 				clearInterval(animation);
 				$("#foto").hide();
+				$("#colorbar").css('color', '#808080');
 				$("#end").fadeIn(10000);
 				setTimeout(()=>{
 					$("#end").hide();
@@ -30,6 +31,7 @@ $(document).ready(function() {
 		img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
 		img = img + end;
 
+		$("#colorbar").css('color', `rgb(${r.dati[i].mainColor.r},${r.dati[i].mainColor.g},${r.dati[i].mainColor.b})`);
 		$("#animationDiv").html(img);
 		
 		let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
