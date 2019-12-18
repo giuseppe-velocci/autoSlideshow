@@ -11,16 +11,19 @@
 	</head>
 	
 	<body>
-		<button class=" btn home-analyze-btn" onclick="window.location.href = '../index.html';"><</button>
+		<button class="btn home-analyze-btn" onclick="window.location.href = '../index.html';"><</button>
+		<button class="btn home-analyze-btn" style="margin-left:80%;" onclick="deleteCategoriesSync()">Delete all</button>
+
 		<div class="contaier text-center">
-			<h1 >Select the category images and start animation.</h1>
-			
+			<h1>Select the category images and start animation.</h1>
+
 			<form class="" id="animazione" action="./animation.html"  method="get">
 				
 				<img src = "images/select-categories.gif" class = "img-fluid" alt = "">
 				<div class="btn" id="folder"></div>
 				<input type="button" class="btn btn-light" onclick="save()" value="Start Animation"/>
 			</form>
+
 		</div>
 		
 	</body>

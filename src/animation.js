@@ -31,7 +31,9 @@ $(document).ready(function() {
 		img = img + "<img id='foto' src=" + folder + "/" + r.dati[i].file + " style='position:relative;' ></div>"
 		img = img + end;
 
-		$("#colorbar").css('color', `rgb(${r.dati[i].mainColor.r},${r.dati[i].mainColor.g},${r.dati[i].mainColor.b})`);
+	//	$("#colorbar").css('color', `rgb(${r.dati[i].mainColor.r},${r.dati[i].mainColor.g},${r.dati[i].mainColor.b})`);
+		$("#colorbar").css('color', `rgb(${r.dati[i].data[0].objColor.r},${r.dati[i].data[0].objColor.g},${r.dati[i].data[0].objColor.b})`);
+
 		$("#animationDiv").html(img);
 		
 		let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
