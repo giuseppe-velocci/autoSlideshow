@@ -1,8 +1,11 @@
+// script for animation.html that handles browser animation for the images basing on .json file inside the given folder
 $(document).ready(function() {   
-	
+
 	let interestArea = require ("./interestArea.js");
 	let folder = "./categories/"+ sessionStorage.getItem("animationFolder");
 	let end = "<div id='end' style='display: none; font-size: xx-large; color: #808080;'>THE END </div>";
+
+	const bboxInterval = 1660;
 
 	$.getJSON(folder + "/detect.json", function(r){
 		let i=0;
@@ -49,7 +52,7 @@ $(document).ready(function() {
 
 		$("#animationDiv").html(img);
 
-		$(".bbox").animate({'opacity': '0'}, 1500);
+		$(".bbox").animate({'opacity': '0'}, bboxInterval);
 		
 		setTimeout(() => {
 		let p = interestArea.interestArea(r.dati[i].data, r.dati[i].width, r.dati[i].height);
@@ -73,6 +76,6 @@ $(document).ready(function() {
 			, 'left': `${(window.innerWidth /2 -(r.dati[i].width-p.left-p.right))}px`
 			}, 3000
 		);
-	}, 1500);
+	}, bboxInterval);
 	}
 }); 

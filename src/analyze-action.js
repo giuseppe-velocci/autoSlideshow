@@ -1,3 +1,4 @@
+// script for analyze-action.html
 const fs = require('fs');
 const allowedExtensions = /(jpg|jpeg)$/;
 

@@ -1,4 +1,4 @@
-// process.chdir(__dirname);
+// child process forked from processAnalyze.js script
 const tflow = require('./ts-img-action');
 
 (async function(){

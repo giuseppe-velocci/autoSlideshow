@@ -1,6 +1,6 @@
+// function that handles json storage
 function updateJson(filename, destinationFolder, detectionFrame)
 {
-	
 	const fs = require('fs');
 	const file = destinationFolder+"/detect.json";
 	if (!fs.existsSync(file)) {
@@ -45,4 +45,3 @@ function updateJson(filename, destinationFolder, detectionFrame)
 module.exports = { 
 	updateJson
 }
-//updateJson("NomeImmagine.jpg", __dirname, {test: "test"})

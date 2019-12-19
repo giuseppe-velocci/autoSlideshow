@@ -1,3 +1,4 @@
+// script for analyze.html
 const path = require('path');
 const { dialog } = require('electron').remote;
 
@@ -12,6 +13,7 @@ if (! window.navigator.onLine) {
        + 'Please check your connection since it is needed to fulfill analysis tasks</h3>';
 }
 
+// stores selected directory path to analyzed in sessionStorage
 document.querySelector('#select').addEventListener('click', (event) => {
     let options = {properties:["openDirectory"]}
     //Synchronous reading folder path

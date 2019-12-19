@@ -1,3 +1,4 @@
+// script that handles processes forking and analisys
 const childProcess  = require('child_process');
 const archiveRouter = require ("./archiveRouter.js");
 const updateJson = require("./updateJson.js")
