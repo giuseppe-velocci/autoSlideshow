@@ -4,11 +4,8 @@
   "description": "auto slideshow with generative music",
   "main": "main.js",
   "scripts": {
-    "start": "electron -r esm .",
+    "start": "C:/Users/g.velocci/Documents/nodejs/finalNodeNewFeats/finalNodePrj/electron/electron.exe -r esm .",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "bin": {
-    "electron": "./node_modules/.bin/electron"
   },
   "keywords": [
     "ai",
@@ -23,7 +20,6 @@
     "@tensorflow/tfjs-core": "~1.2.6",
     "@tensorflow/tfjs-node": "^1.3.2",
     "bootstrap": "^4.4.1",
-    "electron": "^7.1.2",
     "electron-css-reload": "^1.0.8",
     "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
