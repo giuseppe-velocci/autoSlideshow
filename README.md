@@ -9,7 +9,7 @@ First install dependencies with:
 
 `npm start`
 
-**Using the Electron App**
+<br>**Using the Electron App**
 <br>From the electron window click the Analyze Folder button to select a folder containing .jpg files to be analyzed by TensorFlowJs (powered by the pre-trained cocoSsd model). Then click start and wait for the processes to be completed (the number of processes forked depends on both the number of images and cores of the device).
 
 <br>After this phase is completed click the Go To Animation button to select a class of objects you want to be displayed in a browser animation that emphasizes the outer bound detected.
